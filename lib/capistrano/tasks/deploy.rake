@@ -94,7 +94,7 @@ namespace :deploy do
     desc 'Symlink linked directories'
     task :linked_dirs do
       next unless any? :linked_dirs
-      on roles :app do
+      on roles fetch(:symlink_shared_roles, :app) do
         execute :mkdir, '-pv', linked_dir_parents(release_path)
 
         fetch(:linked_dirs).each do |dir|
@@ -113,7 +113,7 @@ namespace :deploy do
     desc 'Symlink linked files'
     task :linked_files do
       next unless any? :linked_files
-      on roles :app do
+      on roles fetch(:symlink_shared_roles, :app) do
         execute :mkdir, '-pv', linked_file_dirs(release_path)
 
         fetch(:linked_files).each do |file|
